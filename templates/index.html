@@ -4,10 +4,48 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width", initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
+        <style>h1 {text-align: center;}</style>
+        <h1> GIVAUDAN-EPITA<br>
+            CODE DIFFUSERS</h1>
+            <style>
+                button {
+                  border: none;
+                  color: black;
+                  padding: 15px 32px;
+                  text-align: center;
+                  text-decoration: none;
+                  display: inline-block;
+                  font-size: 16px;
+                  margin: 4px 2px;
+                  cursor: pointer;
+                }
+                </style>
     </head>
-    <body>Hello world Sheela
-        <textarea>welcome</textarea>
-        <button>IoT</button>
+    <body>  
+        <form method="POST">
+            <br>User Name
+            <select class="form-control" id="userName" name="userName">
+                <option value="Sophie">Sophie</option>
+                <option value="Claire">Claire</option>
+                <option value="Josephine" selected>Josephine</option>
+                <option value="Benoit">Benoit</option>
+                <option value="Faustine">Faustine</option>
+                <option value="Harvey">Harvey</option>
+                <option value="Emile">Emile</option>
+            </select>
+            
+            <br>Enter questionnaire result:
+            <select class="form-control" id="questionnaire" name="questionnaire">
+                <option value="left">left</option>
+                <option value="right">right</option>
+                <option value="neutral" >neutral</option>
+                <option value="angry">angry</option>
+                <option value="happy "selected>happy</option>
+                <option value="calm">calm</option>
+                <option value="sad">sad</option>
+            </select>
+            <input type="submit" name="submit_button" value="start">
+        </form>   
+        <img src="{{url_for('static',filename='fragrance1.jpg')}}" >
     </body>
 </html>
