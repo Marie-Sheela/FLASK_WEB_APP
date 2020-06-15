@@ -50,9 +50,6 @@ def my_link():
     heartRateNeutralStart=80
     heartRateNeutralEnd=100
     heartRateDummyValue=110
-    CLIENT_ID = '22BQWT'
-    CLIENT_SECRET = 'dfc33d81a41114e8feff6d022216842e'
-
     #EMOTIONS and their corresponding FRAGRANCES
     angryFragrance="rose"
     happyFragrance="lavender"
