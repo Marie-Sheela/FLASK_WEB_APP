@@ -4,9 +4,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width", initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <style>h1 {text-align: center;}</style>
-        <h1> GIVAUDAN-EPITA<br>
-            CODE DIFFUSERS</h1>
             <style>
                 button {
                   border: none;
@@ -21,9 +18,10 @@
                 }
                 </style>
     </head>
-    <body>  
+    <body>
+        <center><img src="{{url_for('static',filename='GivaudanEpita.png')}}" >  </center>
         <form method="POST">
-            <br>User Name
+            <center><br>User Name
             <select class="form-control" id="userName" name="userName">
                 <option value="Sophie">Sophie</option>
                 <option value="Claire">Claire</option>
@@ -32,9 +30,9 @@
                 <option value="Faustine">Faustine</option>
                 <option value="Harvey">Harvey</option>
                 <option value="Emile">Emile</option>
-            </select>
+            </select></center>
             
-            <br>Enter questionnaire result:
+            <center>Enter questionnaire result:
             <select class="form-control" id="questionnaire" name="questionnaire">
                 <option value="left">left</option>
                 <option value="right">right</option>
@@ -43,9 +41,9 @@
                 <option value="happy "selected>happy</option>
                 <option value="calm">calm</option>
                 <option value="sad">sad</option>
-            </select>
-            <input type="submit" name="submit_button" value="start">
-        </form>   
-        <img src="{{url_for('static',filename='fragrance1.jpg')}}" >
+            </select></center>
+            <center><input type="submit" name="submit_button" value="start"></center>
+            </form>   
+        <center><img src="{{url_for('static',filename='fragrance1.jpg')}}" ></center>
     </body>
 </html>

@@ -27,7 +27,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db=SQLAlchemy(app)
-
+    
 class User(db.Model):
     name=db.Column(db.String(20),primary_key=True)
     prefferedFragrance=db.Column(db.String(10))
@@ -35,7 +35,7 @@ db.create_all()
 user=User(name='Sophieeee',prefferedFragrance='lavender')
 db.session.add(user)
 db.session.commit()
-"""
+""" 
 #
 
 @app.route('/')
@@ -50,6 +50,9 @@ def my_link():
     heartRateNeutralStart=80
     heartRateNeutralEnd=100
     heartRateDummyValue=110
+    CLIENT_ID = '22BQWT'
+    CLIENT_SECRET = 'dfc33d81a41114e8feff6d022216842e'
+
     #EMOTIONS and their corresponding FRAGRANCES
     angryFragrance="rose"
     happyFragrance="lavender"
@@ -68,10 +71,14 @@ def my_link():
     
     values_dict={'angry': 'angry','happy': 'happy','surprised': 'surprised','sad': 'sad'}
         
-        
+    question= request.form['questionnaire']
+    userName= request.form['userName']
+    print("userName = ", userName)
+    print("question =",question)
    # ********************GOOGLE VISION*************************************
     
-
+    open('pri.txt', 'w').close()
+   
     #Emotions
     emo = ['Angry', 'Surprised','Sad', 'Happy']
     likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
@@ -154,7 +161,6 @@ def my_link():
             for line in f:
                 elements = line.rstrip().split(":")
                 dictList.append(dict(zip(elements[::2], elements[1::2])))
-            #print(dictList)
                         
                         
                         
@@ -163,8 +169,7 @@ def my_link():
             varx=dictList[i][key].lstrip()
             dictList[i][key]=varx
 
-    #print(dictList)
-
+   
     dictnew = {}
 
     for k,v in [(key, d[key]) for d in dictList for key in d]:
@@ -173,8 +178,7 @@ def my_link():
         else:
             dictnew[k].append(v)   
             
-    #print(dictnew)
-
+   
     def counter(dict1):
         dictnew= {'Angry ':[{'VERY_LIKELY': 0},{'LIKELY': 0},{'POSSIBLE': 0}, {'UNLIKELY': 0},{'VERY_UNLIKELY':0}], 
                 'Surprised ': [{'VERY_LIKELY': 0},{'LIKELY': 0}, {'POSSIBLE': 0}, {'UNLIKELY': 0},{'VERY_UNLIKELY':0}],
@@ -193,13 +197,11 @@ def my_link():
         for k in dictnew.keys():
             dictnew[k][4]['VERY_UNLIKELY']=0
                     
-            #else: dictnew[k][4]['VERY_UNLIKELY']=0       
         return dictnew
 
 
     dictnew=counter(dictnew) 
-    #print(dictnew)
-
+   
     def score(dict1):
         order=['VERY_LIKELY','LIKELY', 'POSSIBLE', 'UNLIKELY']
         scoredict={'Angry ':0, 
@@ -212,7 +214,6 @@ def my_link():
                     if dictnew[key][j][n]>0:
                         scoredict[key]=scoredict[key]+ dictnew[key][j][n]
         
-        #print(scoredict)
         listvar=[]
         var1=0
         final= {'Angry ':'VERY_UNLIKELY', 
@@ -245,47 +246,21 @@ def my_link():
                                             
                                     else: semi.append({key:locks})
                                         
-        #print(semi)              
-        """
-        for keys in semi[0].keys():
-            final[keys]=semi[0][keys]
-        print("hello",final)
-        return(scoredict, listvar, final)
-        """
-        
-           
-        """
-        sheela-5lines
-        for keys in semi[0].keys():
-            final[keys]=semi[0][keys]
-        for key, value in final.items(): 
-            print (value) 
-        return(scoredict, listvar, final)
-        """
-        print("final=",final)
         for keys in semi[0].keys():
             final[keys]=semi[0][keys]
         for key, value in final.items():
             if(key=="Angry "):
                 angry=value
                 values_dict["angry"]=angry
-                #print("\n angry dict=", values_dict["angry"])
-                #print(angry)
             if(key=="Surprised "):
                 surprised=value
                 values_dict["surprised"]=surprised
-                #print("\n surprised dict=", values_dict["surprised"])
-                #print(surprised)
             if(key=="Sad "):
                 sad=value
                 values_dict["sad"]=sad
-                #print("\n sad dict=", values_dict["sad"])
-                #print(sad)
             if(key=="Happy "):
                 happy=value
                 values_dict["happy"]=happy
-                #print("\n sad dict=", values_dict["sad"])
-                #print(happy)
         return(scoredict, listvar, final)
 
         
@@ -329,14 +304,25 @@ def my_link():
         heartBeat="above"
     else:
         heartBeat="neutral"
-
+    """
     #The value user entered in textbox is assigned to a variable
     question= request.form['questionnaire']
     userName= request.form['userName']
+    new_user_name=request.form['new_user_name']
+    prefferedFragrance=request.form['Preffered_fragrance']
+    print(new_user_name)
+    print(prefferedFragrance)
 
-    #values_dict={'angry': angry,'happy': happy,'surprised': surprised,'sad': sad}
+    class User(db.Model):
+    name=db.Column(db.String(20),primary_key=True)
+    prefferedFragrance=db.Column(db.String(10))
+    db.create_all()
+    user=User(name='Sophieeee',prefferedFragrance='lavender')
+    db.session.add(user)
+    db.session.commit()
+    """
     for emotion, value in values_dict.items(): 
-        print(value)
+        print(emotion," = ",value)
         if (value=="VERY_LIKELY"): #1st branch of algorithm-one emotion is VERY_LIKELY
             FinalEmotion=emotion
     if(FinalEmotion == ""): #3rd branch of algorithm-all emotions are VERY_UNLIKELY
