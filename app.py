@@ -50,6 +50,7 @@ def my_link():
     heartRateNeutralStart=80
     heartRateNeutralEnd=100
     heartRateDummyValue=110
+    
     #EMOTIONS and their corresponding FRAGRANCES
     angryFragrance="rose"
     happyFragrance="lavender"
