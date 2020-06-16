@@ -66,6 +66,9 @@ def my_link():
     Harvey="citrus"
     Emile="rose"
     
+    CLIENT_ID = ''
+    CLIENT_SECRET = ''
+
     values_dict={'angry': 'angry','happy': 'happy','surprised': 'surprised','sad': 'sad'}
         
     question= request.form['questionnaire']
@@ -74,7 +77,7 @@ def my_link():
     print("question =",question)
    # ********************GOOGLE VISION*************************************
     
-    open('pri.txt', 'w').close()
+    #open('pri.txt', 'w').close()
    
     #Emotions
     emo = ['Angry', 'Surprised','Sad', 'Happy']
@@ -301,23 +304,6 @@ def my_link():
         heartBeat="above"
     else:
         heartBeat="neutral"
-    """
-    #The value user entered in textbox is assigned to a variable
-    question= request.form['questionnaire']
-    userName= request.form['userName']
-    new_user_name=request.form['new_user_name']
-    prefferedFragrance=request.form['Preffered_fragrance']
-    print(new_user_name)
-    print(prefferedFragrance)
-
-    class User(db.Model):
-    name=db.Column(db.String(20),primary_key=True)
-    prefferedFragrance=db.Column(db.String(10))
-    db.create_all()
-    user=User(name='Sophieeee',prefferedFragrance='lavender')
-    db.session.add(user)
-    db.session.commit()
-    """
     for emotion, value in values_dict.items(): 
         print(emotion," = ",value)
         if (value=="VERY_LIKELY"): #1st branch of algorithm-one emotion is VERY_LIKELY
@@ -419,7 +405,7 @@ def my_link():
                     elif(question=="sad"):
                         FinalEmotion="sad"
     #prints final emotion in the terminal
-    #print(f'Final Emotion={FinalEmotion}')
+    print(f'Final Emotion={FinalEmotion}')
     #Pop up window displays result
     popup = tk.Tk()
     popup.wm_title("Result")
