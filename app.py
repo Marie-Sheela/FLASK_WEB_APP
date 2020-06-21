@@ -75,8 +75,8 @@ def my_link():
     Harvey="citrus"
     Emile="rose"
     
-    CLIENT_ID = ''
-    CLIENT_SECRET = ''
+    CLIENT_ID = '22BQWT'
+    CLIENT_SECRET = 'dfc33d81a41114e8feff6d022216842e'
 
     values_dict={'angry': 'angry','happy': 'happy','surprised': 'surprised','sad': 'sad'}
         

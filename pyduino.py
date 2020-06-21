@@ -1,6 +1,7 @@
 """
 A library to interface Arduino through serial connection
 """
+
 import serial
 
 class Arduino():
