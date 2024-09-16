@@ -87,15 +87,14 @@ def my_link():
    # ********************GOOGLE VISION*************************************
     
     #open('pri.txt', 'w').close()
+
    
-    #Emotions
+    # four basic emotions that are provided by google vision
     emo = ['Angry', 'Surprised','Sad', 'Happy']
     likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
                         'LIKELY', 'VERY_LIKELY')
 
-    ############## Spanish version #################
-    #emo = ['Bravo', 'Sorprendido','Triste', 'Feliz']
-    #string = 'Sin emocion'
+    
 
     #from google.oauth2 import service_account
     #credentials = service_account.Credentials.from_service_account_file('key.json')
@@ -104,7 +103,10 @@ def my_link():
 
     # Instantiates a client
     vision_client = vision.ImageAnnotatorClient()
-
+    
+    #OpenCV-Python is a library of Python bindings designed to solve computer vision problems. 
+    #cv2.imshow() method is used to display an image in a window.
+    #The window automatically fits to the image size.
     cv2.imshow('Video', np.empty((5,5),dtype=float))
     
     compressRate = 1
@@ -124,6 +126,7 @@ def my_link():
             y = face.bounding_poly.vertices[0].y
             x2 = face.bounding_poly.vertices[2].x
             y2 = face.bounding_poly.vertices[2].y
+            #cv2.rectangle() method is used to draw a rectangle on any image.
             cv2.rectangle(img, (x, y), (x2, y2), (0, 255, 0), 2)
 
             sentiment = [likelihood_name[face.anger_likelihood],
@@ -153,7 +156,7 @@ def my_link():
                     state = np.argmin(sentiment)
 
                 string = emo[state]
-
+             #cv2.putText() method is used to draw a text string on any image
             cv2.putText(img,string, (x,y-5), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 
         cv2.imshow("Video", img)
@@ -164,7 +167,7 @@ def my_link():
     cv2.destroyAllWindows()
 
     
-    
+    #reads the content of the file as a dictionary.
     dictList = []
     with open('pri.txt', 'r') as f:
             for line in f:
@@ -172,13 +175,13 @@ def my_link():
                 dictList.append(dict(zip(elements[::2], elements[1::2])))
                         
                         
-                        
+    #removes the left space of the dictionary                   
     for i in range(0,len(dictList)):
         for key in dictList[i]:
             varx=dictList[i][key].lstrip()
             dictList[i][key]=varx
 
-   
+    #creates lists of all the possibilities of emotions, keys being different emotions.
     dictnew = {}
 
     for k,v in [(key, d[key]) for d in dictList for key in d]:
@@ -187,7 +190,7 @@ def my_link():
         else:
             dictnew[k].append(v)   
             
-   
+    #counter() function counts the number of occurances of each of the possibilities values, under every emotion.
     def counter(dict1):
         dictnew= {'Angry ':[{'VERY_LIKELY': 0},{'LIKELY': 0},{'POSSIBLE': 0}, {'UNLIKELY': 0},{'VERY_UNLIKELY':0}], 
                 'Surprised ': [{'VERY_LIKELY': 0},{'LIKELY': 0}, {'POSSIBLE': 0}, {'UNLIKELY': 0},{'VERY_UNLIKELY':0}],
@@ -209,8 +212,16 @@ def my_link():
         return dictnew
 
 
-    dictnew=counter(dictnew) 
+    dictnew=counter(dictnew) #end of counter() function
    
+    #score() funcion gives the final emotion based on some priorities
+    #priority 1 = if the number of occurances of a particular emotion is more than any other emotions, then that particualar emotion is considered
+    #priority 2 = if the number of occurances of 2 emotions are same, then the priority of each of the values is considered for both the emotions. 
+    # VERY_LIKELY,LIKELY, POSSIBLE, UNLIKELY is the order of values and VERY_UNLIKELY is when there are no emotions.
+    
+    #NOTE1 - values(VERY_LIKELY,LIKELY, POSSIBLE, UNLIKELY, VERY_UNLIKELY) are genrated for every second of the video. 
+    #NOTE2 -  Every second values are generated, no two values can be true. That is, every time only one value will be true
+    
     def score(dict1):
         order=['VERY_LIKELY','LIKELY', 'POSSIBLE', 'UNLIKELY']
         scoredict={'Angry ':0, 
@@ -275,7 +286,7 @@ def my_link():
         
         
         
-    scoredict, listvar, final=score(dictnew)
+    scoredict, listvar, final=score(dictnew) #end of score() function
 
     #open('pri.txt', 'w').close()
     
